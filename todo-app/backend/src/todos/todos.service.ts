@@ -1,4 +1,4 @@
-// backend/src/todo/todo.service.ts
+// backend/src/todos/todos.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -7,7 +7,7 @@ import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @Injectable()
-export class TodoService {
+export class TodosService {
   constructor(
     @InjectRepository(Todo)
     private todoRepository: Repository<Todo>,

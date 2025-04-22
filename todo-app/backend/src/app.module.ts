@@ -5,7 +5,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TodoModule } from './todos/todos.module';
+import { TodosModule } from './todos/todos.module';
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { TodoModule } from './todos/todos.module';
     }),
     
     // Include the Todo module
-    TodoModule,
+    TodosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
