@@ -13,13 +13,25 @@ A full-stack Todo application with a NestJS backend and Ionic React frontend, pa
 
 ## Quick Start with Docker
 
-The easiest way to get the application running is with Docker Compose - no need to clone the repository or install dependencies.
+There are two ways to run this application with Docker:
 
-### Prerequisites
+### Option 1: Using Docker Run (Simple but No Data Persistence)
 
-- Docker and Docker Compose installed on your machine
+If you just want to try the application quickly:
 
-### Installation and Setup
+```bash
+# Pull the image from Docker Hub
+docker pull troyhd/nest-ionic-todo:latest
+
+# Run the container
+docker run -p 3000:3000 -d troyhd/nest-ionic-todo:latest
+```
+
+**Note:** With this method, your todo data will be lost if the container is restarted or removed.
+
+### Option 2: Using Docker Compose (Recommended for Data Persistence)
+
+For a more robust setup with data persistence:
 
 1. Create a file named `docker-compose.yml` with the following content:
 
@@ -48,14 +60,24 @@ volumes:
 docker compose up -d
 ```
 
+With this method, your todo data will be stored in a Docker volume, ensuring it persists even if you restart or rebuild the container.
+
 3. Access the application at [http://localhost:3000](http://localhost:3000)
 
 ### Stopping the Application
 
-To stop the application, run:
-
+To stop the Docker Compose version:
 ```bash
 docker compose down
+```
+
+To stop the Docker Run version, first find the container ID:
+```bash
+docker ps
+```
+Then stop it:
+```bash
+docker stop [CONTAINER_ID]
 ```
 
 ## Technology Stack
