@@ -62,7 +62,7 @@ docker compose up -d
 
 With this method, your todo data will be stored in a Docker volume, ensuring it persists even if you restart or rebuild the container.
 
-3. Access the application at [http://localhost:3000](http://localhost:3000)
+3. Access the application at [http://localhost:3000](http://localhost:3000)  or  [http://localhost:3000/todos](http://localhost:3000/todos)
 
 ### Stopping the Application
 
