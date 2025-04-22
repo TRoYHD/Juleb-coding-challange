@@ -44,7 +44,7 @@ npm install
 npm start
 ```
 
-The frontend will be available at http://localhost:8100
+The frontend will be available at http://localhost:3000
 
 ### Backend (NestJS)
 
@@ -111,7 +111,7 @@ version: '3.8'
 
 services:
   nest-ionic-todo:
-    image: yourusername/nest-ionic-todo:latest
+    image: troyhd/nest-ionic-todo:latest
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -142,7 +142,3 @@ The backend provides the following REST API endpoints:
 The application uses SQLite as the database, with TypeORM for database operations. 
 In the Docker container, the SQLite database file is stored in the `/app/data` directory, 
 which is persisted using a Docker volume.
-
-## License
-
-MIT
