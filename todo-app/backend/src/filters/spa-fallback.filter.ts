@@ -1,4 +1,3 @@
-// src/filters/spa-fallback.filter.ts
 import { ExceptionFilter, Catch, NotFoundException, ArgumentsHost } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { join } from 'path';

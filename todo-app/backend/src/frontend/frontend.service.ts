@@ -1,4 +1,3 @@
-// src/frontend/frontend.service.ts
 import { Injectable } from '@nestjs/common';
 import { join } from 'path';
 
