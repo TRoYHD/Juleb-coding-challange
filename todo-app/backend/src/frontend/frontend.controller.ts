@@ -6,6 +6,7 @@ import { join } from 'path';
 export class FrontendController {
   @Get('*path')
   serveClient(@Res() res: Response, @Param('path') path: string) {
-    return res.sendFile(join(__dirname, '..', 'public', 'index.html'));
+    console.log('Serving frontend, requested path:', path);
+    return res.sendFile(join('/app/public/index.html'));
   }
 }

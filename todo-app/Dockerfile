@@ -1,5 +1,4 @@
 FROM node:18-alpine AS builder
-
 # Set working directory
 WORKDIR /app
 
@@ -40,6 +39,12 @@ RUN npm install --only=production
 # Copy compiled backend code and frontend static files
 COPY --from=builder /app/backend/dist ./dist
 COPY --from=builder /app/backend/public ./public
+
+# Create data directory for SQLite
+RUN mkdir -p /app/data
+
+# Make sure permissions are correct
+RUN chmod -R 755 /app/public
 
 # Expose the port the app runs on
 EXPOSE 3000
