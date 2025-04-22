@@ -21,7 +21,7 @@ import { FrontendModule } from './frontend/frontend.module';
       rootPath: join(__dirname, '..', 'public'),
       exclude: ['/api*'],
       serveStaticOptions: {
-        index: false,
+        index: 'index.html', 
       },
     }),
     TodosModule,

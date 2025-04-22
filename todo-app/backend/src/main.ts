@@ -15,8 +15,12 @@ async function bootstrap() {
     }),
   );
   
-  app.setGlobalPrefix('api');
+  // Set explicit global prefix with exclusions
+  app.setGlobalPrefix('api', {
+    exclude: ['/', '/*'], // This ensures the root path is not prefixed
+  });
   
   await app.listen(3000);
+  console.log('Application started successfully on port 3000');
 }
 bootstrap();

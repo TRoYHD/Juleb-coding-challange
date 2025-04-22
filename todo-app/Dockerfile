@@ -1,53 +1,47 @@
-FROM node:18-alpine AS builder
+FROM node:18-alpine AS frontend-builder
 # Set working directory
 WORKDIR /app
-
-# Copy package.json files for both frontend and backend
-COPY frontend/package*.json ./frontend/
-COPY backend/package*.json ./backend/
-
-# Install dependencies for both projects
-RUN cd frontend && npm install
-RUN cd backend && npm install
-
-# Copy source code for both projects
-COPY frontend ./frontend
-COPY backend ./backend
-
+# Copy frontend package.json
+COPY frontend/package*.json ./
+# Install dependencies
+RUN npm install
+# Copy frontend source code
+COPY frontend ./
 # Build the frontend
-RUN cd frontend && npm run build
+RUN npm run build
 
-# Create public directory in backend and copy frontend build
-RUN mkdir -p backend/public
-RUN cp -r frontend/build/* backend/public/
-
-# Build the backend
-RUN cd backend && npm run build
-
-# Start a new stage for the final image
-FROM node:18-alpine
-
+FROM node:18-alpine AS backend-builder
 # Set working directory
 WORKDIR /app
+# Copy backend package.json
+COPY backend/package*.json ./
+# Install dependencies including dev dependencies
+RUN npm install
+# Copy backend source code
+COPY backend ./
+# Create public directory and copy frontend build from frontend-builder
+COPY --from=frontend-builder /app/build ./public
+# Build the backend
+RUN npm run build
 
+FROM node:18-alpine
+# Set working directory
+WORKDIR /app
 # Copy package.json and package-lock.json
-COPY --from=builder /app/backend/package*.json ./
-
+COPY --from=backend-builder /app/package*.json ./
 # Install only production dependencies
 RUN npm install --only=production
-
-# Copy compiled backend code and frontend static files
-COPY --from=builder /app/backend/dist ./dist
-COPY --from=builder /app/backend/public ./public
-
+# Copy compiled backend code
+COPY --from=backend-builder /app/dist ./dist
+# Copy public directory with frontend build
+COPY --from=backend-builder /app/public ./public
 # Create data directory for SQLite
 RUN mkdir -p /app/data
-
-# Make sure permissions are correct
-RUN chmod -R 755 /app/public
-
-# Expose the port the app runs on
+# Ensure directories exist and have proper permissions
+RUN ls -la /app/public && \
+    echo "Checking if index.html exists:" && \
+    ls -la /app/public/index.html || echo "index.html NOT FOUND!"
+# Expose the port
 EXPOSE 3000
-
 # Command to run the application
 CMD ["node", "dist/main"]
