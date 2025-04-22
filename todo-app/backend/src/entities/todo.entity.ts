@@ -1,4 +1,3 @@
-// backend/src/todo/entities/todo.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()

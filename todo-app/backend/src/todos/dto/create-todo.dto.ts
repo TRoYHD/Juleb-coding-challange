@@ -1,4 +1,3 @@
-// backend/src/todo/dto/create-todo.dto.ts
 import { IsNotEmpty, IsString, IsOptional, IsBoolean, MaxLength } from 'class-validator';
 
 export class CreateTodoDto {
