@@ -1,4 +1,3 @@
-// In TodoForm.tsx
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -25,7 +24,6 @@ interface TodoFormProps {
   onCancel: () => void;
 }
 
-// Validation schema
 const TodoSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, 'Title is too short')
@@ -57,7 +55,6 @@ const TodoForm: React.FC<TodoFormProps> = ({
             try {
               console.log('Form submitting with values:', values);
               await onSubmit(values);
-              // No need to reset form as we'll be navigating away
             } catch (err) {
               console.error('Error submitting form:', err);
             } finally {
@@ -105,7 +102,6 @@ const TodoForm: React.FC<TodoFormProps> = ({
                   name="completed"
                   checked={values.completed}
                   onIonChange={(e) => {
-                    // This properly handles the checkbox state
                     console.log("Checkbox changed to:", e.detail.checked);
                     setFieldValue('completed', e.detail.checked);
                   }}

@@ -28,13 +28,12 @@ const TodoList: React.FC<TodoListProps> = ({ onEdit, refresh, onRefreshComplete 
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
   const [todoToDelete, setTodoToDelete] = useState<Todo | null>(null);
 
-  // Fetch todos when component mounts or refresh flag changes
   useEffect(() => {
     fetchTodos();
     if (refresh) {
       onRefreshComplete();
     }
-  }, [refresh, onRefreshComplete]); // Added dependency
+  }, [refresh, onRefreshComplete]); 
 
   const fetchTodos = async () => {
     try {
@@ -52,10 +51,8 @@ const TodoList: React.FC<TodoListProps> = ({ onEdit, refresh, onRefreshComplete 
 
   const handleToggleComplete = async (todo: Todo) => {
     try {
-      // Only send the completed status, nothing else
       const updatedTodo = await TodoService.update(todo.id, {
         completed: !todo.completed
-        // Don't include title or description here
       });
       
       setTodos(todos.map(t => t.id === todo.id ? updatedTodo : t));
@@ -123,7 +120,7 @@ const TodoList: React.FC<TodoListProps> = ({ onEdit, refresh, onRefreshComplete 
             <IonLabel>
               <h2 style={{ 
                 textDecoration: todo.completed ? 'line-through' : 'none',
-                opacity: todo.completed ? 0.7 : 1 // Add opacity rather than making text disappear
+                opacity: todo.completed ? 0.7 : 1 
               }}>
                 {todo.title}
               </h2>
@@ -132,7 +129,6 @@ const TodoList: React.FC<TodoListProps> = ({ onEdit, refresh, onRefreshComplete 
               </p>
             </IonLabel>
             
-            {/* Added visible buttons for better usability */}
             <IonButtons slot="end">
               <IonButton onClick={() => onEdit(todo)}>
                 <IonIcon slot="icon-only" icon={create} />

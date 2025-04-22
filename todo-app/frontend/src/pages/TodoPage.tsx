@@ -26,7 +26,6 @@ const TodoPage: React.FC = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<boolean>(false);
 
-  // Default values for the form
   const defaultTodo: CreateTodoDto = {
     title: '',
     description: '',
@@ -50,7 +49,6 @@ const TodoPage: React.FC = () => {
 
   const handleRefresh = (event: CustomEvent) => {
     setRefreshTrigger(true);
-    // The event.detail.complete() will be called by the TodoList component
     setTimeout(() => {
       event.detail.complete();
     }, 1000);
@@ -59,11 +57,9 @@ const TodoPage: React.FC = () => {
   const handleFormSubmit = async (values: CreateTodoDto) => {
     try {
       if (editingTodo) {
-        // Update existing todo
         await TodoService.update(editingTodo.id, values);
         setMessage('Todo updated successfully!');
       } else {
-        // Create new todo
         await TodoService.create(values);
         setMessage('Todo created successfully!');
       }

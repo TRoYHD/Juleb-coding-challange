@@ -64,9 +64,7 @@ export class TodosService {
     
     const todo = await this.findOne(id);
     console.log(`[TodosService] Found todo to update:`, todo);
-    
-    // Only update properties that are actually provided (not undefined)
-    // This is the key fix to prevent title/description from being overwritten with undefined
+
     for (const key in updateTodoDto) {
       if (updateTodoDto[key] !== undefined) {
         todo[key] = updateTodoDto[key];

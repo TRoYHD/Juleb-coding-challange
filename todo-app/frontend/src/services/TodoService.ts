@@ -1,13 +1,10 @@
-// src/services/TodoService.ts
 import { Todo, CreateTodoDto, UpdateTodoDto } from '../models/Todo';
 
-// API base URL - will be used for both development and production
 const API_URL = process.env.NODE_ENV === 'production' 
   ? '/api/todos' 
   : 'http://localhost:3000/api/todos';
 
 export const TodoService = {
-  // Get all todos
   getAll: async (): Promise<Todo[]> => {
     try {
       const response = await fetch(API_URL);
@@ -24,7 +21,6 @@ export const TodoService = {
     }
   },
 
-  // Get a specific todo by ID
   getById: async (id: number): Promise<Todo> => {
     try {
       const response = await fetch(`${API_URL}/${id}`);
@@ -41,7 +37,6 @@ export const TodoService = {
     }
   },
 
-  // Create a new todo
   create: async (todoData: CreateTodoDto): Promise<Todo> => {
     try {
       const response = await fetch(API_URL, {
@@ -64,7 +59,6 @@ export const TodoService = {
     }
   },
 
-  // Update an existing todo
   update: async (id: number, todoData: UpdateTodoDto): Promise<Todo> => {
     try {
       const response = await fetch(`${API_URL}/${id}`, {
@@ -87,7 +81,6 @@ export const TodoService = {
     }
   },
 
-  // Delete a todo
   delete: async (id: number): Promise<void> => {
     try {
       const response = await fetch(`${API_URL}/${id}`, {

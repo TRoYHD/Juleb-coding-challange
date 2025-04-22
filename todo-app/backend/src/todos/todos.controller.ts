@@ -22,7 +22,7 @@ export class TodosController {
     return this.todosService.create(createTodoDto);
   }
 
-  @Patch(':id')  // Changed from Put to Patch
+  @Patch(':id') 
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
     console.log(`[TodosController] PATCH request received for todo ${id}`, updateTodoDto);
     return this.todosService.update(+id, updateTodoDto);
