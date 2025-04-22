@@ -1,0 +1,23 @@
+/* src/index.css */
+/* You can add your custom styles here */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  /* Custom styles for the Todo app */
+  .error-message {
+    color: var(--ion-color-danger);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }

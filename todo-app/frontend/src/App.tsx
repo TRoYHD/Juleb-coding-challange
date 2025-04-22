@@ -1,19 +1,21 @@
-// src/App.tsx - Simplified version
+// src/App.tsx - Should contain the router setup
 import React from 'react';
-import { IonApp, IonContent, IonPage, IonText, setupIonicReact } from '@ionic/react';
+import { Redirect, Route } from 'react-router-dom';
+import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
+import TodoPage from './pages/TodoPage';
 
+// Initialize Ionic
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonPage>
-      <IonContent className="ion-padding">
-        <IonText>
-          <h1>Debug Page</h1>
-          <p>If you can see this, your app is rendering correctly.</p>
-        </IonText>
-      </IonContent>
-    </IonPage>
+    <IonReactRouter>
+      <IonRouterOutlet>
+        <Route path="/todos" component={TodoPage} exact={true} />
+        <Route exact path="/" render={() => <Redirect to="/todos" />} />
+      </IonRouterOutlet>
+    </IonReactRouter>
   </IonApp>
 );
 
