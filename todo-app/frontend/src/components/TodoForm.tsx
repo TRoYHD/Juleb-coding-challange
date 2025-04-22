@@ -1,6 +1,6 @@
-// src/components/TodoForm.tsx
+// In TodoForm.tsx
 import React from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {
   IonButton,
@@ -53,10 +53,11 @@ const TodoForm: React.FC<TodoFormProps> = ({
         <Formik
           initialValues={initialValues}
           validationSchema={TodoSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             try {
+              console.log('Form submitting with values:', values);
               await onSubmit(values);
-              resetForm();
+              // No need to reset form as we'll be navigating away
             } catch (err) {
               console.error('Error submitting form:', err);
             } finally {
@@ -64,7 +65,7 @@ const TodoForm: React.FC<TodoFormProps> = ({
             }
           }}
         >
-          {({ isSubmitting, handleChange, handleBlur, values, errors, touched }) => (
+          {({ isSubmitting, handleChange, handleBlur, values, errors, touched, setFieldValue }) => (
             <Form>
               <IonItem className={errors.title && touched.title ? 'ion-invalid' : ''}>
                 <IonLabel position="floating">Title</IonLabel>
@@ -103,7 +104,11 @@ const TodoForm: React.FC<TodoFormProps> = ({
                   slot="start"
                   name="completed"
                   checked={values.completed}
-                  onIonChange={handleChange}
+                  onIonChange={(e) => {
+                    // This properly handles the checkbox state
+                    console.log("Checkbox changed to:", e.detail.checked);
+                    setFieldValue('completed', e.detail.checked);
+                  }}
                 />
               </IonItem>
 

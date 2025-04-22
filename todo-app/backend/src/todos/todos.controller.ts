@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -22,8 +22,9 @@ export class TodosController {
     return this.todosService.create(createTodoDto);
   }
 
-  @Put(':id')
+  @Patch(':id')  // Changed from Put to Patch
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
+    console.log(`[TodosController] PATCH request received for todo ${id}`, updateTodoDto);
     return this.todosService.update(+id, updateTodoDto);
   }
 

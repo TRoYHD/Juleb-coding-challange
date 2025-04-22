@@ -8,10 +8,12 @@ import { TodosModule } from './todos/todos.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'todo.sqlite',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+      database: process.env.NODE_ENV === 'production' 
+      ? '/app/data/todo.sqlite' 
+      : 'todo.sqlite',
+    autoLoadEntities: true,
+    synchronize: true,
+  }),
     TodosModule,
   ],
   controllers: [AppController],

@@ -8,10 +8,8 @@ import {
   IonIcon,
   IonCheckbox,
   IonSpinner,
-  IonItemSliding,
-  IonItemOption,
-  IonItemOptions,
-  IonAlert
+  IonAlert,
+  IonButtons
 } from '@ionic/react';
 import { trash, create } from 'ionicons/icons';
 import { Todo } from '../models/Todo';
@@ -54,8 +52,10 @@ const TodoList: React.FC<TodoListProps> = ({ onEdit, refresh, onRefreshComplete 
 
   const handleToggleComplete = async (todo: Todo) => {
     try {
+      // Only send the completed status, nothing else
       const updatedTodo = await TodoService.update(todo.id, {
         completed: !todo.completed
+        // Don't include title or description here
       });
       
       setTodos(todos.map(t => t.id === todo.id ? updatedTodo : t));
@@ -114,30 +114,34 @@ const TodoList: React.FC<TodoListProps> = ({ onEdit, refresh, onRefreshComplete 
     <>
       <IonList>
         {todos.map(todo => (
-          <IonItemSliding key={todo.id}>
-            <IonItem>
-              <IonCheckbox 
-                slot="start" 
-                checked={todo.completed} 
-                onIonChange={() => handleToggleComplete(todo)}
-              />
-              <IonLabel>
-                <h2 style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-                  {todo.title}
-                </h2>
-                <p>{todo.description}</p>
-              </IonLabel>
-            </IonItem>
+          <IonItem key={todo.id}>
+            <IonCheckbox 
+              slot="start" 
+              checked={todo.completed} 
+              onIonChange={() => handleToggleComplete(todo)}
+            />
+            <IonLabel>
+              <h2 style={{ 
+                textDecoration: todo.completed ? 'line-through' : 'none',
+                opacity: todo.completed ? 0.7 : 1 // Add opacity rather than making text disappear
+              }}>
+                {todo.title}
+              </h2>
+              <p style={{ opacity: todo.completed ? 0.7 : 1 }}>
+                {todo.description}
+              </p>
+            </IonLabel>
             
-            <IonItemOptions side="end">
-              <IonItemOption color="primary" onClick={() => onEdit(todo)}>
+            {/* Added visible buttons for better usability */}
+            <IonButtons slot="end">
+              <IonButton onClick={() => onEdit(todo)}>
                 <IonIcon slot="icon-only" icon={create} />
-              </IonItemOption>
-              <IonItemOption color="danger" onClick={() => handleDelete(todo)}>
+              </IonButton>
+              <IonButton color="danger" onClick={() => handleDelete(todo)}>
                 <IonIcon slot="icon-only" icon={trash} />
-              </IonItemOption>
-            </IonItemOptions>
-          </IonItemSliding>
+              </IonButton>
+            </IonButtons>
+          </IonItem>
         ))}
       </IonList>
 
