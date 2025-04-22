@@ -1,18 +1,26 @@
-import { Controller, Get, Res, All } from '@nestjs/common';
+// src/frontend/frontend.controller.ts
+import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { join } from 'path';
+import { FrontendService } from './frontend.service';
 
 @Controller()
 export class FrontendController {
-  @Get('/')
+  constructor(private readonly frontendService: FrontendService) {}
+
+  @Get()
   serveRoot(@Res() res: Response) {
-    console.log('Serving frontend root');
-    return res.sendFile(join('/app/public/index.html'));
+    return res.sendFile(this.frontendService.getSpaFilePath());
   }
   
-  @Get('*')
-  serveWildcard(@Res() res: Response) {
-    console.log('Serving frontend wildcard route');
-    return res.sendFile(join('/app/public/index.html'));
+  // Add specific routes your SPA needs
+  @Get('todos')
+  serveTodos(@Res() res: Response) {
+    return res.sendFile(this.frontendService.getSpaFilePath());
+  }
+  
+  // Add more routes as needed for your SPA navigation
+  @Get('todos/:id')
+  serveTodoDetail(@Res() res: Response) {
+    return res.sendFile(this.frontendService.getSpaFilePath());
   }
 }

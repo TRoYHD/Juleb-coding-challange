@@ -9,7 +9,9 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-    volumes:
+    volumes:  
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
       - todo-data:/app/data
 
 volumes:

@@ -5,7 +5,6 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TodosModule } from './todos/todos.module';
-import { FrontendModule } from './frontend/frontend.module';
 
 @Module({
   imports: [
@@ -19,13 +18,8 @@ import { FrontendModule } from './frontend/frontend.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
-      exclude: ['/api*'],
-      serveStaticOptions: {
-        index: 'index.html', 
-      },
     }),
     TodosModule,
-    FrontendModule,
   ],
   controllers: [AppController],
   providers: [AppService],

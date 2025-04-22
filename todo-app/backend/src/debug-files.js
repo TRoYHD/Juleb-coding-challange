@@ -1,40 +1,36 @@
-// debug-files.js
+// debug-container.js
 const fs = require('fs');
 const path = require('path');
 
-// List of paths to check
-const paths = [
-  '/app/public',
-  '/app/public/index.html',
-  '/app/dist',
-  path.join(__dirname, 'public'),
-  path.join(__dirname, 'public/index.html'),
-  path.join(__dirname, '..', 'public'),
-  path.join(__dirname, '..', 'public/index.html')
-];
-
+console.log('=== Docker Container File Check ===');
 console.log('Current directory:', __dirname);
-console.log('Checking paths:');
+console.log('Parent directory:', path.resolve(__dirname, '..'));
 
-// Check each path
-paths.forEach(p => {
-  try {
-    const exists = fs.existsSync(p);
-    console.log(`${p}: ${exists ? 'EXISTS' : 'NOT FOUND'}`);
-    
-    if (exists) {
-      const stats = fs.statSync(p);
-      console.log(`  - Is directory: ${stats.isDirectory()}`);
-      
-      if (stats.isDirectory()) {
-        console.log('  - Contents:');
-        const files = fs.readdirSync(p);
-        files.forEach(file => {
-          console.log(`    - ${file}`);
-        });
-      }
-    }
-  } catch (err) {
-    console.log(`${p}: ERROR - ${err.message}`);
+// Check public directory
+const publicPath = path.resolve(__dirname, '..', 'public');
+console.log(`\nChecking ${publicPath}:`);
+if (fs.existsSync(publicPath)) {
+  console.log('✅ Directory exists');
+  const files = fs.readdirSync(publicPath);
+  console.log('Files:', files);
+  
+  // Check index.html
+  const indexPath = path.join(publicPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    console.log('✅ index.html exists');
+    console.log('Content preview:', fs.readFileSync(indexPath, 'utf8').slice(0, 200) + '...');
+  } else {
+    console.log('❌ index.html NOT FOUND');
   }
-});
+  
+  // Check static directory
+  const staticPath = path.join(publicPath, 'static');
+  if (fs.existsSync(staticPath)) {
+    console.log('✅ static directory exists');
+    console.log('Static files:', fs.readdirSync(staticPath));
+  } else {
+    console.log('❌ static directory NOT FOUND');
+  }
+} else {
+  console.log('❌ Directory NOT FOUND');
+}
