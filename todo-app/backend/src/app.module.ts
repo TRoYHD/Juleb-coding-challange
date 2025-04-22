@@ -5,7 +5,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TodosModule } from './todos/todos.module';
-import { FrontendModule } from '../../frontend/src/frontend/frontend.module';
+import { FrontendModule } from '../frontend/frontend.module';
 
 @Module({
   imports: [
